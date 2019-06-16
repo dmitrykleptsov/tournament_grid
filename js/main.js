@@ -60,48 +60,65 @@ function displayGrid() {
   for (var i = 0; i < valueT / 2; i++) {
     if (i + 1 <= halfD) {
       $('.leftTwo').append(divGrid
-        .replace('$id', 'empty')
+        .replace('$id', 'o' + (i + 1))
         .replace('gridSquads', 'gridSquads gridLeftTwo'));
     } else {
       $('.rightTwo').append(divGrid
-        .replace('$id', 'empty')
+        .replace('$id', 'o' + (i + 1))
         .replace('gridSquads', 'gridSquads gridRightTwo'));
     }
   }
+  $('.final').css('top', '178px');
+  $('.leftSize').css('margin-left', '410px');
+  $('.rightSize').css('margin-right', '410px');
 
-  for (var i = 0; i < valueT / 4; i++) {
-    if (i + 1 <= halfT) {
-      $('.leftThree').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridLeftThree'));
-    } else {
-      $('.rightThree').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridRightThree'));
+  if (valueT >= 8) {
+    for (var i = 0; i < valueT / 4; i++) {
+      if (i + 1 <= halfT) {
+        $('.leftThree').append(divGrid
+          .replace('$id', 'tw' + (i + 1))
+          .replace('gridSquads', 'gridSquads gridLeftThree'));
+      } else {
+        $('.rightThree').append(divGrid
+          .replace('$id', 'tw' + (i + 1))
+          .replace('gridSquads', 'gridSquads gridRightThree'));
+      }
     }
-  }
+    $('.final').css('top', '238px');
+    $('.leftSize').css('margin-left', '200px');
+    $('.rightSize').css('margin-right', '200px');
 
-  for (var i = 0; i < valueT / 8; i++) {
-    if (i + 1 <= halfF) {
-      $('.leftFour').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridLeftFour'));
-    } else {
-      $('.rightFour').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridRightFour'));
-    }
-  }
 
-  for (var i = 0; i < valueT / 16; i++) {
-    if (i + 1 <= halfFi) {
-      $('.leftFive').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridLeftFive'));
-    } else {
-      $('.rightFive').append(divGrid
-        .replace('$id', 'empty')
-        .replace('gridSquads', 'gridSquads gridRightFive'));
+    if (valueT >= 16) {
+      for (var i = 0; i < valueT / 8; i++) {
+        if (i + 1 <= halfF) {
+          $('.leftFour').append(divGrid
+            .replace('$id', 'th' + (i + 1))
+            .replace('gridSquads', 'gridSquads gridLeftFour'));
+        } else {
+          $('.rightFour').append(divGrid
+            .replace('$id', 'th' + (i + 1))
+            .replace('gridSquads', 'gridSquads gridRightFour'));
+        }
+      }
+      $('.final').css('top', '358px');
+      $('.leftSize').css('margin-left', '20px');
+      $('.rightSize').css('margin-right', '20px');
+
+      if (valueT >= 32) {
+        for (var i = 0; i < valueT / 16; i++) {
+          if (i + 1 <= halfFi) {
+            $('.leftFive').append(divGrid
+              .replace('$id', 'f' + (i + 1))
+              .replace('gridSquads', 'gridSquads gridLeftFive'));
+          } else {
+            $('.rightFive').append(divGrid
+              .replace('$id', 'f' + (i + 1))
+              .replace('gridSquads', 'gridSquads gridRightFive'));
+          }
+        }
+        $('.final').css('top', '598px');
+      }
     }
   }
 
