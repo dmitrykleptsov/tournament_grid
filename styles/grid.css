@@ -24,12 +24,14 @@
   font-weight: lighter;
 }
 
-.grid .leftSize {
+.grid .leftSize,
+.grid .leftSizeLose {
   float: left;
   margin: 30px;
 }
 
-.grid .infoList {
+.grid .infoList,
+.grid .infoListLose {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -38,7 +40,17 @@
   border-color: lightgray transparent;
 }
 
-.grid .infoList .infoStageL, .grid .infoList .infoStageC {
+.grid .infoListLose {
+  height: 60px;
+  color: #595959;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 24px;
+  line-height: 60px;
+}
+
+.grid .infoList .infoStageL,
+.grid .infoList .infoStageC {
   float: left;
   width: 190px;
   text-align: center;
@@ -52,31 +64,36 @@
   left: 740px;
 }
 
-.grid .left1, .grid .left2, .grid .left3, .grid .left4, .grid .left5, .grid .left6 {
+.grid .left1, .grid .left2, .grid .left3, .grid .left4, .grid .left5, .grid .left6,
+.grid .leftLose1, .grid .leftLose2, .grid .leftLose3, .grid .leftLose4, .grid .leftLose5, .grid .leftLose6 {
   float: left;
 }
 
-.grid .left2 .gridLeft2 {
-  margin: 30px 0 80px 30px;
+.grid .block {
+  margin: 0 30px 30px 0;
 }
 
-.grid .left3 .gridLeft3 {
-  margin: 90px 0 200px 30px;
+.grid .blockTeam2 {
+  margin: 55px 30px 140px 0;
 }
 
-.grid .left4 .gridLeft4 {
-  margin: 210px 0 440px 30px;
+.grid .blockTeam3 {
+  margin: 165px 30px 360px 0;
 }
 
-.grid .left5 .gridLeft5 {
-  margin: 450px 0 920px 30px
+.grid .blockTeam4 {
+  margin: 385px 30px 800px 0;
 }
 
-.grid .left6 .gridLeft6 {
-  margin: 930px 0 1880px 30px;
+.grid .blockTeam5 {
+  margin: 825px 30px 1680px 0;
 }
 
-.grid .point{
+.grid .blockTeam6 {
+  margin: 1705px 30px 0 0;
+}
+
+.grid .point {
   width: 30px;
   height: 40px;
   border-left: 1px solid #C2C6CE;
@@ -86,19 +103,31 @@
   display: block;
   float: right;
   content: "";
-  border-radius: 0 10px 10px 0;
   text-align: center;
 }
 
 .grid .gridSquads {
   width: 160px;
   height: 40px;
-  border-radius: 10px;
   box-shadow: 0 0 1px 1px lightgray;
-  margin-bottom: 20px;
   color: #595959;
   font-size: 12px;
   text-align: center;
   vertical-align: middle;
   line-height: 40px;
+}
+
+.grid .gridSquads:first-child {
+  border-radius: 5px 0 0 0;
+}
+
+.grid .gridSquads:last-child {
+  border-radius: 0 0 0 5px;
+}
+
+.grid footer {
+  border: 1px solid lightgray;
+  border-color: lightgray transparent transparent transparent;
+  width: 100%;
+  height: 200px;
 }

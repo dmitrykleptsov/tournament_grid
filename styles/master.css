@@ -5,16 +5,17 @@ html, body {
   margin: 0;
   font-size: 14px;
   font-family: 'Poppins', sans-serif;
+  background-size: 100%;
 }
 
 .menu {
   position: relative;
   width: 500px;
-  height: 550px;
+  height: 600px;
   border-radius: 15px;
   box-shadow: 0 0 2px 1px lightgray;
   display: block;
-  margin: 200px auto;
+  margin: 150px auto;
   transition: 1s all;
 }
 
@@ -57,6 +58,16 @@ html, body {
   transition: 0.5s all;
   font-size: 14px;
   color: #495366;
+}
+
+.menu .settings .loseGrid {
+  margin-left: 15px;
+}
+
+.menu .settings .selectLoseGrid sup {
+  margin-left: 5px;
+  font-size: 10px;
+  font-weight: lighter;
 }
 
 .menu .settings select[name="mode"] {
@@ -153,13 +164,6 @@ html, body {
   font-size: 12px;
   top: -34px;
   left: 6px;
-}
-
-.grid footer {
-  border: 1px solid lightgray;
-  border-color: lightgray transparent transparent transparent;
-  width: 100%;
-  height: 200px;
 }
 
 .clearfix {

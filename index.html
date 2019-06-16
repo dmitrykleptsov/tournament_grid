@@ -41,9 +41,12 @@
       <select name="mode" id="mode" onchange="getMode(this)">
         <option value="0" selected disabled>Не выбрано</option>
         <option value="Single Elimination">Single Elimination</option>
-        <option value="Double Elimination">Double Elimination</option>
+        <option class="modeGrid" value="Double Elimination">Double Elimination</option>
       </select>
       <br>
+      <div class="selectLoseGrid">
+        <span>Сетка проигравших: </span><input type="checkbox" class="loseGrid" value="1"><sup>(beta)</sup>
+      </div>
       <span>Введите описание турнира:</span><br>
       <textarea name="description" rows="8" cols="80" placeholder="Описание..." maxlength="200"></textarea>
       <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
@@ -57,7 +60,7 @@
   <div class="grid"> <!--Турнирная сетка-->
     <header>
       <div>Турнирная сетка</div>
-      <div>Турнир проходит в формете <span id="displayMode" style="font-weight: 400;"></span></div>
+      <div><span id="displayMode" style="font-weight: 400;"></span></div>
     </header>
     <div class="infoList"></div>
     <div class="leftSize">
@@ -68,15 +71,17 @@
       <div class="left5"></div>
       <div class="left6"></div>
     </div>
-    <div class="rightSize">
-      <div class="right1"></div>
-      <div class="right2"></div>
-      <div class="right3"></div>
-      <div class="right4"></div>
-      <div class="right5"></div>
-      <div class="right6"></div>
-    </div>
-    <footer class="clearfix"></footer> <!--Прочее-->
+    <!-- Сетка лузеров
+    <div class="infoListLose" style="display: none;">Сетка Лузеров</div>
+    <div class="leftSizeLose" style="display: none;">
+      <div class="leftLose1"></div>
+      <div class="leftLose2"></div>
+      <div class="leftLose3"></div>
+      <div class="leftLose4"></div>
+      <div class="leftLose5"></div>
+      <div class="leftLose6"></div>
+    </div> -->
+    <footer class="clearfix"></footer> <!-- Прочее-->
   </div>
 </body>
 
