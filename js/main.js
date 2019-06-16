@@ -296,7 +296,6 @@ function styleResultPoints(value) {
 
 // Редактирование результатов матча
 function editMatch(editId) {
-  modalWindow();
   idResultPoints = editId.substring(5, 7); // Кусок идентификатора с цифрами
   idResultPointsP = editId.substring(7, 12); // Кусок идентификатора с буквами
   teamOne = $('#grid-' + idResultPoints + '' + idResultPointsP).text().substring(1, 9); // Хранит название первой команды из выбранного блока
@@ -313,6 +312,13 @@ function editMatch(editId) {
   }
   var textResultOne = id('firstResult').childNodes[0]; // Хранят в себе текст, чтобы не задеть дочерние элементы
   var textResultTwo = id('secondResult').childNodes[0];
+
+  if (teamOne == '' || teamTwo == '') {
+    alert('Ошибка! Вы не можете подвести итоги этого матча, он еще не начался');
+    return -1;
+  }
+
+  modalWindow();
 
   textResultOne.nodeValue = teamOne; // Выводят названия команд в модальном окне
   textResultTwo.nodeValue = teamTwo;
