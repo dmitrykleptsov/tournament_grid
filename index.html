@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <div class="menu">
+  <div class="menu"> <!--Меню-->
     <div class="header">
       <span>Меню</span>
     </div>
@@ -40,12 +40,8 @@
       <span>Выберите режим турнира:</span><br>
       <select name="mode" id="mode" onchange="getMode(this)">
         <option value="0" selected disabled>Не выбрано</option>
-        <option value="Best of One">Best of One</option>
-        <option value="Best of One, Финал: Best of Three">Best of One | Final: Best of Three</option>
-        <option value="Best of Two">Best of Two</option>
-        <option value="Best of Two, Финал: Best of Three">Best of Two | Final: Best of Three</option>
-        <option value="Best of Three">Best of Three</option>
-        <option value="Best of Three, Финал: Best of Five">Best of Three | Final: Best of Five</option>
+        <option value="Single Elimination">Single Elimination</option>
+        <option value="Double Elimination">Double Elimination</option>
       </select>
       <br>
       <span>Введите описание турнира:</span><br>
@@ -53,35 +49,34 @@
       <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
     </div>
   </div>
-  <div class="loading">
+  <div class="loading"> <!--Загрузочный экран-->
     <div>Загрузка<span id="load"></span><br>
       <span>Создание турнирной сетки</span>
     </div>
   </div>
-  <div class="grid">
+  <div class="grid"> <!--Турнирная сетка-->
     <header>
       <div>Турнирная сетка</div>
       <div>Турнир проходит в формете <span id="displayMode" style="font-weight: 400;"></span></div>
     </header>
     <div class="infoList"></div>
-    <div class="final">FINAL</div>
     <div class="leftSize">
-      <div class="leftOne"></div>
-      <div class="leftTwo"></div>
-      <div class="leftThree"></div>
-      <div class="leftFour"></div>
-      <div class="leftFive"></div>
-      <div class="leftSix"></div>
+      <div class="left1"></div>
+      <div class="left2"></div>
+      <div class="left3"></div>
+      <div class="left4"></div>
+      <div class="left5"></div>
+      <div class="left6"></div>
     </div>
     <div class="rightSize">
-      <div class="rightOne"></div>
-      <div class="rightTwo"></div>
-      <div class="rightThree"></div>
-      <div class="rightFour"></div>
-      <div class="rightFive"></div>
-      <div class="rightSix"></div>
+      <div class="right1"></div>
+      <div class="right2"></div>
+      <div class="right3"></div>
+      <div class="right4"></div>
+      <div class="right5"></div>
+      <div class="right6"></div>
     </div>
-    <footer class="clearfix"></footer>
+    <footer class="clearfix"></footer> <!--Прочее-->
   </div>
 </body>
 
