@@ -23,19 +23,16 @@ function createGrid() {
 }
 
 function displayGrid() {
-  $('.leftOne').html('');
-  $('.rightOne').html('');
-  $('.leftTwo').html('');
-  $('.rightTwo').html('');
 
-  var half = valueT / 2;
-  var halfD = half / 2;
-  var halfT = halfD / 2;
-  var halfF = halfT / 2;
-  var halfFi = halfF / 2;
+  id('displayMode').innerHTML = valueM;
+
+  //  id('infoFirstStageL').innerHTML = "1/" + valueT;
+  //  id('infoFirstStageR').innerHTML = "1/" + valueT;
+  //  id('infoSecondStageL').innerHTML = "1/" + valueT / 2;
+  //  id('infoSecondStageR').innerHTML = "1/" + valueT / 2;
 
   for (var i = 0; i < valueT; i++) {
-    if (i + 1 <= half) {
+    if (i + 1 <= valueT / 2) {
       $('.leftOne').append(divGrid
         .replace('$id', +i + 1)
         .replace('gridSquads', 'gridSquads gridLeftOne'));
@@ -58,7 +55,7 @@ function displayGrid() {
   }
 
   for (var i = 0; i < valueT / 2; i++) {
-    if (i + 1 <= halfD) {
+    if (i + 1 <= valueT / 4) {
       $('.leftTwo').append(divGrid
         .replace('$id', 'o' + (i + 1))
         .replace('gridSquads', 'gridSquads gridLeftTwo'));
@@ -74,7 +71,7 @@ function displayGrid() {
 
   if (valueT >= 8) {
     for (var i = 0; i < valueT / 4; i++) {
-      if (i + 1 <= halfT) {
+      if (i + 1 <= valueT / 8) {
         $('.leftThree').append(divGrid
           .replace('$id', 'tw' + (i + 1))
           .replace('gridSquads', 'gridSquads gridLeftThree'));
@@ -91,7 +88,7 @@ function displayGrid() {
 
     if (valueT >= 16) {
       for (var i = 0; i < valueT / 8; i++) {
-        if (i + 1 <= halfF) {
+        if (i + 1 <= valueT / 16) {
           $('.leftFour').append(divGrid
             .replace('$id', 'th' + (i + 1))
             .replace('gridSquads', 'gridSquads gridLeftFour'));
@@ -107,7 +104,7 @@ function displayGrid() {
 
       if (valueT >= 32) {
         for (var i = 0; i < valueT / 16; i++) {
-          if (i + 1 <= halfFi) {
+          if (i + 1 <= valueT / 32) {
             $('.leftFive').append(divGrid
               .replace('$id', 'f' + (i + 1))
               .replace('gridSquads', 'gridSquads gridLeftFive'));

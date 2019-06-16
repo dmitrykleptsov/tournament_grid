@@ -7,11 +7,20 @@
 .grid header {
   width: 100%;
   height: 100px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.grid header div:first-child {
   font-size: 32px;
   font-weight: 400;
   color: #595959;
-  margin-top: 20px;
-  text-align: center;
+}
+
+.grid header div:last-child {
+  font-size: 18px;
+  color: #595959;
+  font-weight: lighter;
 }
 
 .grid .leftSize {
@@ -24,6 +33,26 @@
   float: right;
 }
 
+/* .grid .leftSize #infoFirstStageL, #infoSecondStageL {
+  position: absolute;
+  top: 110px;
+  left: 88px;
+  user-select: none;
+}
+#infoSecondStageL {
+  top: 144px;
+  left: 278px;
+}
+.grid .rightSize #infoFirstStageR, #infoSecondStageR {
+  position: absolute;
+  top: 110px;
+  right: 88px;
+  user-select: none;
+}
+#infoSecondStageR {
+  top: 144px;
+  right: 278px;
+} */
 .grid .leftOne, .grid .leftTwo, .grid .leftThree, .grid .leftFour {
   float: left;
 }
@@ -49,7 +78,8 @@
 }
 
 .grid .rightFour .gridRightFour {
-  margin: 210px 30px 440px 0;;
+  margin: 210px 30px 440px 0;
+  ;
 }
 
 .grid .leftFour .gridLeftFour {
@@ -76,9 +106,7 @@
   font-size: 30px;
 }
 
-.gridSquads::before {
-
-}
+.gridSquads::before {}
 
 .grid .gridSquads {
   width: 160px;

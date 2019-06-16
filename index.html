@@ -40,12 +40,12 @@
       <span>Выберите режим турнира:</span><br>
       <select name="mode" id="mode" onchange="getMode(this)">
         <option value="0" selected disabled>Не выбрано</option>
-        <option value="1">Best of One</option>
-        <option value="13">Best of One | Final: Best of Three</option>
-        <option value="2">Best of Two</option>
-        <option value="23">Best of Two | Final: Best of Three</option>
-        <option value="3">Best of Three</option>
-        <option value="35">Best of Three | Final: Best of Five</option>
+        <option value="Best of One">Best of One</option>
+        <option value="Best of One, Финал: Best of Three">Best of One | Final: Best of Three</option>
+        <option value="Best of Two">Best of Two</option>
+        <option value="Best of Two, Финал: Best of Three">Best of Two | Final: Best of Three</option>
+        <option value="Best of Three">Best of Three</option>
+        <option value="Best of Three, Финал: Best of Five">Best of Three | Final: Best of Five</option>
       </select>
       <br>
       <span>Введите описание турнира:</span><br>
@@ -60,18 +60,23 @@
   </div>
   <div class="grid">
     <header>
-      <span>Турнирная сетка</span>
+      <div>Турнирная сетка</div>
+      <div>Турнир проходит в формете <span id="displayMode" style="font-weight: 400;"></span></div>
     </header>
     <div class="final">FINAL</div>
     <div class="leftSize">
+      <!--  <div id="infoFirstStageL"></div> -->
       <div class="leftOne"></div>
+      <!--  <div id="infoSecondStageL"></div> -->
       <div class="leftTwo"></div>
       <div class="leftThree"></div>
       <div class="leftFour"></div>
       <div class="leftFive"></div>
     </div>
     <div class="rightSize">
+      <!--  <div id="infoFirstStageR"></div> -->
       <div class="rightOne"></div>
+      <!--  <div id="infoSecondStageR"></div> -->
       <div class="rightTwo"></div>
       <div class="rightThree"></div>
       <div class="rightFour"></div>
