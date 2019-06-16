@@ -88,7 +88,7 @@ function displayGrid() {
       }
       firstStage++;
     }
-    if (stageBlock == 3) {
+    if (stageBlock >= 3) {
       positionDifference *= 2;
       identificator += 'a';
     }
@@ -107,8 +107,8 @@ function displayGrid() {
 // Построение блоков
 function createBlocksTeams() {
   var stageDivider = 2,
-    identificator = '';
-  stageBlock = 0,
+    identificator = '',
+    stageBlock = 0,
     positionDifference = 1,
     positionInStage = 0,
     step = 1;
@@ -223,6 +223,7 @@ function displaySelectPoints() {
 
 // Стилизация выбора счета
 function styleResultPoints(value) {
+  selectResultPoints = value;
   if (value == 10) {
     $('.resultPoint').css({
       'background-color': 'white',
@@ -290,14 +291,17 @@ function styleResultPoints(value) {
       'border': 'none'
     });
   }
-
-  selectResultPoints = value;
 }
 
 // Редактирование результатов матча
 function editMatch(editId) {
-  idResultPoints = editId.substring(5, 7); // Кусок идентификатора с цифрами
-  idResultPointsP = editId.substring(7, 12); // Кусок идентификатора с буквами
+  if (editId.substring(5, 8) > 100) {
+    idResultPoints = editId.substring(5, 8); // Кусок идентификатора с цифрами (двузначные)
+    idResultPointsP = editId.substring(8, 13); // Кусок идентификатора с буквами
+  } else {
+    idResultPoints = editId.substring(5, 7); // Кусок идентификатора с цифрами (трёхзначные)
+    idResultPointsP = editId.substring(7, 12); // Кусок идентификатора с буквами
+  }
   teamOne = $('#grid-' + idResultPoints + '' + idResultPointsP).text().substring(1, 9); // Хранит название первой команды из выбранного блока
   if (idResultPointsP == '') {
     teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из выбранного блока первого этапа
@@ -363,6 +367,9 @@ function saveResult() {
       id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '2';
       hardDescription(0);
     }
+  } else if (selectResultPoints == 0) {
+    alert('Ошибка! Выберите счет!');
+    return -1;
   } else {
     id('grid-' + idResultPoints + 'a' + idResultPointsP).appendChild(document.createTextNode(teamTwo));
     hardDescription(1);
@@ -374,6 +381,7 @@ function saveResult() {
       hardDescription(2);
     }
   }
+  selectResultPoints = 0;
   $('#edit-' + idResultPoints + '' + idResultPointsP).css('display', 'none');
   $('.resultPoint').css({
     'background-color': 'white',
@@ -388,22 +396,12 @@ function saveResult() {
 // Вывод модального окна
 function modalWindow() {
   $('#overlay').fadeIn(400, function() {
-    $('#modal').css('display', 'block').animate({
-      opacity: 1,
-      top: '50%'
-    }, 100);
+    $('#modal').css('display', 'block');
   });
 
   $('.modal_close, #overlay, .saveResult').click(function() {
-    $('.modal_div').animate({
-        opacity: 0,
-        top: '45%'
-      }, 100,
-      function() {
-        $(this).css('display', 'none');
-        $('#overlay').fadeOut(400);
-      }
-    );
+    $('.modal_div').css('display', 'none');
+    $('#overlay').fadeOut(400);
   });
 }
 
