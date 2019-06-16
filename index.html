@@ -9,6 +9,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <script src="js/main.js" charset="utf-8"></script>
+  <link rel="shortcut icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="styles/master.css">
   <link rel="stylesheet" href="styles/grid.css">
   <title>Tournament Grid</title>
@@ -86,6 +87,7 @@
     <div id="modal" class="modal_div">
       <span class="modal_close"></span>
       <div class="headerText">Введите результат матча</div>
+      <hr noshade size="1" color="lightgray">
       <div class="content">
         <div class="block">
           <div class="gridSquads" id="firstResult">
@@ -95,6 +97,11 @@
             <div class="point" id="secondPointResult"></div>
           </div>
         </div>
+        <div class="blockPoints">
+
+        </div>
+        <span class="modeModal">*<span id="displayModeModal"></span> - матч до <span id="textModeModal"></span> победы</span>
+        <div class="saveResult" id="saveResult" onclick="saveResult()">Сохранить</div>
       </div>
     </div>
     <div id="overlay"></div>

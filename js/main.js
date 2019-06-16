@@ -8,7 +8,12 @@ var Timer, // Переменная для создания таймера
   count = 1, // Переменная для рассчета этапа турнира
   divGrid = '</div><div class="gridSquads" id="grid-$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
   divBlockTeam = '<div class="block block$block blockTeam$side" id="block$blockId"><div class="edit" id="edit-$editID" href="#modal" onclick="editMatch(this.id)"></div>', // Переменная для создания блоков
-  divInfo = '<div class="infoStage$lor">$num</div>'; // Этапы турнира
+  divInfo = '<div class="infoStage$lor">$num</div>', // Этапы турнира
+  divResultPoints = '<button class="resultPoint" value="$valuePoints" onclick="styleResultPoints(this.value)">$pointsResult</button>', // Вывод выбора счета матча
+  selectResultPoints = 0, // Вспомогательная глобальная переменная, хранящая значение выбранного результирующего счета матча
+  idResultPoints = 0, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
+  teamOne = '',
+  teamTwo = '';
 
 // Получение необходимых значений и запуск загрузочного экрана
 function createGrid() {
@@ -38,7 +43,11 @@ function displayGrid() {
     k = 1,
     l = 1,
     step = 1,
-    countL = -1;
+    countL = -1,
+    varInt = 96,
+    varChar,
+    h = 1,
+    lo = 1;
 
   id('displayMode').innerHTML = valueM; // Вывод режима турнира
   createBlocksTeams(); // Создание блоков для каждых 2-х команд
@@ -47,24 +56,56 @@ function displayGrid() {
   for (var i = 4; i <= valueT * 2; i *= 2) {
     k *= 2;
     countD++;
+    varChar = String.fromCharCode(+(varInt) + 1);
     for (var j = 1; j <= valueT / l; j++) {
       countL += 2;
-      $('.block' + countD + 'o' + step).append(divGrid
-        .replace('$id', countD + '' + j + '1')
-        .replace('$pointId', countD + 'o' + j)
-        .replace('gridSquads', 'gridSquads gridLeft' + countD)
-      );
+      if (countD == 1) {
+        $('.block' + countD + 'o' + step).append(divGrid
+          .replace('$id', step + '' + h)
+          .replace('$pointId', step + '' + h + 'p')
+          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+        );
+        id('grid-' + step + '' + h).appendChild(document.createTextNode('Team #' + j));
+        id('point-' + step + '' + h + 'p').innerHTML = '0';
+        if (j <= valueT / 2) {
+          $('#edit-' + j + '1').css('display', 'block');
+        }
+      } else if (countD == 2) {
+        $('.block' + countD + 'o' + step).append(divGrid
+          .replace('$id', j + '1' + 'a')
+          .replace('$pointId', step + '' + h + 'pa')
+          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+        );
+      } else if (countD == 3) {
+        $('.block' + countD + 'o' + step).append(divGrid
+          .replace('$id', lo + '1' + 'b')
+          .replace('$pointId', lo + '' + h + 'p')
+          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+        );
+        lo += 2;
+      } else if (countD == 4) {
+        $('.block' + countD + 'o' + step).append(divGrid
+          .replace('$id', lo + '1' + 'c')
+          .replace('$pointId', lo + '' + h + 'p')
+          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+        );
+        lo += 4;
+      } else if (countD == 5) {
+        $('.block' + countD + 'o' + step).append(divGrid
+          .replace('$id', lo + '1' + 'd')
+          .replace('$pointId', lo + '' + h + 'p')
+          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+        );
+        lo += 6;
+      }
       if (j % 2 == 0) {
         step++;
+        h = 0;
       }
-      if (countD == 1) {
-        id('grid-1' + j + '1').appendChild(document.createTextNode('Team #' + j));
-        id('point-1o' + j).innerHTML = '0';
-        if (j <= valueT / 2) {
-          $('#edit-1' + countL + '1').css('display', 'block');
-        }
-      }
+      h++;
     }
+    lo = 1;
+    varInt++;
     countL = -1;
     step = 1;
     l *= 2;
@@ -98,7 +139,70 @@ function displayGrid() {
     } */
 
   styleGrids(); // Стилизация сетки в соответствии с выбором кол-ва команд
+  displaySelectPoints();
   $('.grid').css('display', 'block'); // Вывод самой сетки
+}
+
+// Построение блоков
+function createBlocksTeams() {
+  var l1 = 2,
+    countL = 0,
+    countE = 0,
+    countK = -1,
+    step = 1;
+
+  for (var i = 4; i <= valueT * 2; i *= 2) {
+    countL++;
+    for (var j = 1; j <= valueT / l1; j++) {
+      countE++;
+      countK += 2;
+      if (countL == 1) {
+        $('.left' + countL).append(divBlockTeam
+          .replace('$editID', step + '1')
+          .replace('$side', countL)
+          .replace('$blockId', countL + 'o' + countE)
+          .replace('$block', countL + 'o' + countE)
+        );
+        step++;
+      } else if (countL == 2) {
+        $('.left' + countL).append(divBlockTeam
+          .replace('$editID', step + '1' + 'aa')
+          .replace('$side', countL)
+          .replace('$blockId', countL + 'o' + countE)
+          .replace('$block', countL + 'o' + countE)
+        );
+        step += 2;
+      } else if (countL == 3) {
+        $('.left' + countL).append(divBlockTeam
+          .replace('$editID', step + '1' + 'bb')
+          .replace('$side', countL)
+          .replace('$blockId', countL + 'o' + countE)
+          .replace('$block', countL + 'o' + countE)
+        );
+        step += 4;
+      } else if (countL == 4) {
+        $('.left' + countL).append(divBlockTeam
+          .replace('$editID', step + '1' + 'cc')
+          .replace('$side', countL)
+          .replace('$blockId', countL + 'o' + countE)
+          .replace('$block', countL + 'o' + countE)
+        );
+        step += 6;
+      } else if (countL == 5) {
+        $('.left' + countL).append(divBlockTeam
+          .replace('$editID', step + '1' + 'dd')
+          .replace('$side', countL)
+          .replace('$blockId', countL + 'o' + countE)
+          .replace('$block', countL + 'o' + countE)
+        );
+        step += 8;
+      }
+    }
+    step = 1;
+    countK = -1;
+    countE = 0;
+    l1 *= 2;
+  }
 }
 
 // Информация об основном этапе турнира
@@ -122,37 +226,93 @@ function infoList() {
   }
 }
 
-// Построение блоков
-function createBlocksTeams() {
-  var l1 = 2,
-    countL = 0,
-    countE = 0,
-    countK = -1;
+// Вывод вариантов результата матча
+function displaySelectPoints() {
+  var iterr = 0;
+  var resultZ = 0;
+  var resultO = 1;
 
-  for (var i = 4; i <= valueT * 2; i *= 2) {
-    countL++;
-    for (var j = 1; j <= valueT / l1; j++) {
-      countE++;
-      countK += 2;
-      $('.left' + countL).append(divBlockTeam
-        .replace('$editID', countL + '' + countK + '1')
-        .replace('$side', countL)
-        .replace('$blockId', countL + 'o' + countE)
-        .replace('$block', countL + 'o' + countE)
-      );
+  if (valueM === 'Single Elimination') {
+    iterr = 2;
+    $('.blockPoints').css('margin-top', '40px');
+  } else {
+    iterr = 4;
+  }
+
+  for (var i = 0; i < iterr; i++) {
+    if (iterr == 4) {
+      resultO = 2;
     }
-    countK = -1;
-    countE = 0;
-    l1 *= 2;
+    $('.blockPoints').append(divResultPoints
+      .replace('$pointsResult', resultZ + ':' + resultO)
+      .replace('$valuePoints', resultZ + '' + resultO)
+    );
+    if (iterr == 2) {
+      resultZ++;
+      resultO--;
+    }
+  }
+}
+
+// Стилизация выбора счета
+function styleResultPoints(value) {
+  if (value.substring(1) == 0) {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:last-child').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
+  } else {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:first-child').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
+  }
+
+  selectResultPoints = value;
+}
+
+// Продвижение сетки
+function saveResult() {
+  var truePoints = Math.floor(selectResultPoints / 10);
+  if (truePoints) {
+    id('grid-' + idResultPoints + 'a').appendChild(document.createTextNode(teamOne));
+    id('point-' + idResultPoints + 'p').innerHTML = '1';
+    $('#edit-' + idResultPoints).css('display', 'none');
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+  } else {
+    id('grid-' + idResultPoints + 'a').appendChild(document.createTextNode(teamTwo));
+    id('point-' + (+idResultPoints + 1) + 'p').innerHTML = '1';
+    $('#edit-' + idResultPoints).css('display', 'none');
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
   }
 }
 
 // Редактирование результатов матча
 function editMatch(editId) {
   modalWindow();
-  var idResult = editId.substring(5, 8); // Кусок идентификатора
-  var teamOne = $('#grid-' + idResult).text().substring(1, 9); // Хранит название первой команды из блока
-  var teamTwo = $('#grid-' + (+idResult + 10)).text().substring(1, 9); // Хранит название второй команды из блока
+  idResultPoints = editId.substring(5, 8); // Кусок идентификатора
+  teamOne = $('#grid-' + idResultPoints).text().substring(1, 9); // Хранит название первой команды из блока
+  teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из блока
   var textResultOne = id('firstResult').childNodes[0]; // Хранят в себе текст, чтобы не задеть дочерние элементы
   var textResultTwo = id('secondResult').childNodes[0];
 
@@ -162,6 +322,12 @@ function editMatch(editId) {
   id('firstPointResult').innerHTML = 0; // Вывод очков первой команды
   id('secondPointResult').innerHTML = 0; // Вывод очков второй команды
 
+  id('displayModeModal').innerHTML = valueM; // Вывод режима турнира
+  if (valueM === 'Single Elimination') {
+    id('textModeModal').innerHTML = 'одной';
+  } else {
+    id('textModeModal').innerHTML = 'двух';
+  }
 }
 
 // Вывод модального окна
@@ -170,14 +336,14 @@ function modalWindow() {
     $('#modal').css('display', 'block').animate({
       opacity: 1,
       top: '50%'
-    }, 200);
+    }, 100);
   });
 
-  $('.modal_close, #overlay').click(function() {
+  $('.modal_close, #overlay, .saveResult').click(function() {
     $('.modal_div').animate({
         opacity: 0,
         top: '45%'
-      }, 200,
+      }, 100,
       function() {
         $(this).css('display', 'none');
         $('#overlay').fadeOut(400);
