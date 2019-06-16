@@ -3,4 +3,109 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.menu {
+  width: 500px;
+  height: 550px;
+  border-radius: 15px;
+  box-shadow: 0 0 2px 1px lightgray;
+  display: block;
+  margin: 200px auto;
+  transition: 1s all;
+}
+
+.menu .header {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  color: #595959;
+  border-radius: 15px 15px 0 0;
+  vertical-align: middle;
+  line-height: 60px;
+}
+
+.menu .settings {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.menu .settings span {
+  color: #595959;
+  font-weight: lighter;
+  margin-top: 20px;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.menu .settings select {
+  outline: none;
+  border: none;
+  width: 110px;
+  height: 30px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 1px 1px #C2C6CE;
+  box-shadow: 0 0 1px 1px #C2C6CE;
+  padding: 0 15px 0 15px;
+  margin: 10px 0;
+  -webkit-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  transition: 0.5s all;
+  font-size: 14px;
+  color: #495366;
+}
+
+.menu .settings select[name="mode"] {
+  width: 240px;
+}
+
+.menu .settings textarea {
+  width: 95%;
+  height: 100px;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 0 1px 1px lightgray;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-weight: lighter;
+  padding: 10px 10px;
+  color: #595959;
+}
+
+.menu button[name="button"] {
+  width: 100%;
+  height: 45px;
+  background-color: #5995ED;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin-top: 25px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.menu button[name="button"]:hover {
+  cursor: pointer;
+}
+
+.loading {
+  width: 400px;
+  margin: 380px auto;
+}
+
+.loading div {
+  font-size: 40px;
+  font-weight: 400;
+  color: #595959;
+  text-align: center;
+}
+
+.loading span:last-child {
+  font-size: 20px;
 }

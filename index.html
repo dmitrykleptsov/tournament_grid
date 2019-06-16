@@ -7,13 +7,50 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <script src="js/main.js" charset="utf-8"></script>
+  <script src="js/check.js" charset="utf-8"></script>
   <link rel="stylesheet" href="styles/master.css">
   <title>Tournament Grid</title>
 </head>
 
 <body>
-
+  <div class="menu">
+    <div class="header">
+      <span>Меню</span>
+    </div>
+    <hr noshade size="1" color="lightgray">
+    <div class="settings">
+      <span>Выберите сколько команд участвуют в турнире:</span>
+      <select name="teams" id="teams" onchange="getTeams(this)">
+        <option value="0" selected disabled>Не выбрано</option>
+        <option value="4">4</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+        <option value="32">32</option>
+        <option value="64">64</option>
+      </select><br>
+      <span>Выберите режим турнира:</span><br>
+      <select name="mode" id="mode" onchange="getMode(this)">
+        <option value="0" selected disabled>Не выбрано</option>
+        <option value="1">Best of One</option>
+        <option value="1-3">Best of One | Final: Best of Three</option>
+        <option value="2">Best of Two</option>
+        <option value="2-3">Best of Two | Final: Best of Three</option>
+        <option value="3">Best of Three</option>
+        <option value="3-5">Best of Three | Final: Best of Five</option>
+      </select>
+      <br>
+      <span>Введите описание турнира:</span><br>
+      <textarea name="description4" rows="8" cols="80" placeholder="Описание..."></textarea>
+      <button type="button" name="button" onclick="createGrid(); check()">Создать сетку</button>
+    </div>
+  </div>
+  <div class="loading">
+    <div>Загрузка<span id="load"></span><br>
+      <span>Создание турнирной сетки</span>
+    </div>
+  </div>
 </body>
 
 </html>
