@@ -9,14 +9,15 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <script src="js/main.js" charset="utf-8"></script>
-  <script src="js/check.js" charset="utf-8"></script>
+  <link rel="shortcut icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="styles/master.css">
   <link rel="stylesheet" href="styles/grid.css">
   <title>Tournament Grid</title>
 </head>
 
 <body>
-  <div class="menu"> <!--Меню-->
+  <div class="menu">
+    <!--Меню-->
     <div class="header">
       <span>Меню</span>
     </div>
@@ -44,20 +45,19 @@
         <option class="modeGrid" value="Double Elimination">Double Elimination</option>
       </select>
       <br>
-      <div class="selectLoseGrid">
-        <span>Сетка проигравших: </span><input type="checkbox" class="loseGrid" value="1"><sup>(beta)</sup>
-      </div>
       <span>Введите описание турнира:</span><br>
       <textarea name="description" rows="8" cols="80" placeholder="Описание..." maxlength="200"></textarea>
       <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
     </div>
   </div>
-  <div class="loading"> <!--Загрузочный экран-->
+  <div class="loading">
+    <!--Загрузочный экран-->
     <div>Загрузка<span id="load"></span><br>
       <span>Создание турнирной сетки</span>
     </div>
   </div>
-  <div class="grid"> <!--Турнирная сетка-->
+  <div class="grid">
+    <!--Турнирная сетка-->
     <header>
       <div>Турнирная сетка</div>
       <div><span id="displayMode" style="font-weight: 400;"></span></div>
@@ -70,17 +70,30 @@
       <div class="left4"></div>
       <div class="left5"></div>
       <div class="left6"></div>
+      <div class="teamWinner" id="winner"></div>
     </div>
-    <!-- Сетка лузеров
-    <div class="infoListLose" style="display: none;">Сетка Лузеров</div>
-    <div class="leftSizeLose" style="display: none;">
-      <div class="leftLose1"></div>
-      <div class="leftLose2"></div>
-      <div class="leftLose3"></div>
-      <div class="leftLose4"></div>
-      <div class="leftLose5"></div>
-      <div class="leftLose6"></div>
-    </div> -->
+    <div id="modal" class="modal_div">
+      <span class="modal_close"></span>
+      <div class="headerText">Введите результат матча</div>
+      <hr noshade size="1" color="lightgray">
+      <div class="content">
+        <div class="block">
+          <div class="gridSquads" id="firstResult">
+            <div class="point" id="firstPointResult"></div>
+          </div>
+          <div class="gridSquads" id="secondResult">
+            <div class="point" id="secondPointResult"></div>
+          </div>
+        </div>
+        <div class="blockPoints">
+
+        </div>
+        <span class="modeModal">*<span id="displayModeModal"></span> - матч до <span id="textModeModal"></span> победы</span>
+        <div class="saveResult" id="saveResult" onclick="saveResult()">Сохранить</div>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
     <footer class="clearfix"></footer> <!-- Прочее-->
   </div>
 </body>

@@ -5,13 +5,12 @@ html, body {
   margin: 0;
   font-size: 14px;
   font-family: 'Poppins', sans-serif;
-  background-size: 100%;
 }
 
 .menu {
   position: relative;
   width: 500px;
-  height: 600px;
+  height: 550px;
   border-radius: 15px;
   box-shadow: 0 0 2px 1px lightgray;
   display: block;
@@ -46,7 +45,7 @@ html, body {
 .menu .settings select {
   outline: none;
   border: none;
-  width: 110px;
+  width: 150px;
   height: 30px;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 1px 1px #C2C6CE;
@@ -58,16 +57,6 @@ html, body {
   transition: 0.5s all;
   font-size: 14px;
   color: #495366;
-}
-
-.menu .settings .loseGrid {
-  margin-left: 15px;
-}
-
-.menu .settings .selectLoseGrid sup {
-  margin-left: 5px;
-  font-size: 10px;
-  font-weight: lighter;
 }
 
 .menu .settings select[name="mode"] {
@@ -102,7 +91,7 @@ html, body {
   font-weight: 400;
 }
 
-.menu button[name="button"]:hover {
+.menu button[name="button"]:hover, .saveResult:hover, .resultPoint:hover {
   cursor: pointer;
 }
 
@@ -127,7 +116,7 @@ html, body {
 .menu .errorTeams, .menu .errorMode {
   position: absolute;
   top: 120px;
-  left: 190px;
+  left: 228px;
   width: auto;
   padding-right: 15px;
   height: 27.5px;
@@ -164,6 +153,114 @@ html, body {
   font-size: 12px;
   top: -34px;
   left: 6px;
+}
+
+.modal_div {
+  width: 400px;
+  height: 200px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  background: #fff;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -190px;
+  display: none;
+  z-index: 5;
+}
+
+.modal_div .modal_close {
+  width: 22px;
+  height: 22px;
+  background-image: url('../img/close.svg');
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  display: block;
+}
+
+.modal_div .content .block {
+  margin: 15px 0 0 20px;
+  position: relative;
+  float: left;
+}
+
+.modal_div .content .block .gridSquads {
+  width: 230px;
+}
+
+.modal_div .content .modeModal {
+  color: #595959;
+  font-size: 12px;
+  position: absolute;
+  top: 180px;
+  left: 10px;
+}
+
+.modal_div .headerText {
+  color: #595959;
+  font-size: 18px;
+  font-weight: lighter;
+  margin: 8px 0 0 85px;
+}
+
+.modal_div .content .saveResult {
+  width: 80px;
+  height: 30px;
+  background-color: #5995ED;
+  color: white;
+  outline: none;
+  border: none;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 5px;
+  right: 7px;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.modal_div .content .blockPoints {
+  float: right;
+  width: 125px;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+
+.modal_div .content .blockPoints .resultPoint {
+  width: 55px;
+  float: left;
+  outline: none;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  margin-right: 5px;
+  height: 30px;
+  font-size: 12px;
+  color: #595959;
+}
+
+.modal_div .content .blockPoints .resultPoint:nth-child(2n) {
+  margin-right: 0px;
+}
+
+#overlay {
+  z-index: 3;
+  position: fixed;
+  background-color: #000;
+  opacity: 0.8;
+  -moz-opacity: 0.8;
+  filter: alpha(opacity=80);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  display: none;
 }
 
 .clearfix {
