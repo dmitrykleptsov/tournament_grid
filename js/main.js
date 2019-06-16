@@ -13,7 +13,8 @@ var Timer, // Переменная для создания таймера
   idResultPoints = 0, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
   idResultPointsP, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
   teamOne = '', // Хранит информацию о первой команде, выбранного матча
-  teamTwo = ''; // Хранит информацию о второй команде, выбранного матча
+  teamTwo = '', // Хранит информацию о второй команде, выбранного матча
+  audio = new Audio('http://file.mobilmusic.ru/02/3a/2e/153099.mp3');
 
 // Получение необходимых значений и запуск загрузочного экрана
 function createGrid() {
@@ -218,7 +219,7 @@ function displaySelectPoints() {
     $('.blockPoints').css('margin-top', '25px');
     $('.resultPoint:nth-child(3), .resultPoint:nth-child(4)').css('margin-top', '5px');
   }
-} // to Finish
+}
 
 // Стилизация выбора счета
 function styleResultPoints(value) {
@@ -373,6 +374,9 @@ function saveResult() {
     'color': '#595959',
     'border': '1px solid lightgray'
   });
+  if ($('.teamWinner').text() != '') {
+    audio.play();
+  }
 }
 
 // Вывод модального окна
