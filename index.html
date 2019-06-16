@@ -11,6 +11,7 @@
   <script src="js/main.js" charset="utf-8"></script>
   <script src="js/check.js" charset="utf-8"></script>
   <link rel="stylesheet" href="styles/master.css">
+  <link rel="stylesheet" href="styles/grid.css">
   <title>Tournament Grid</title>
 </head>
 
@@ -40,21 +41,41 @@
       <select name="mode" id="mode" onchange="getMode(this)">
         <option value="0" selected disabled>Не выбрано</option>
         <option value="1">Best of One</option>
-        <option value="1-3">Best of One | Final: Best of Three</option>
+        <option value="13">Best of One | Final: Best of Three</option>
         <option value="2">Best of Two</option>
-        <option value="2-3">Best of Two | Final: Best of Three</option>
+        <option value="23">Best of Two | Final: Best of Three</option>
         <option value="3">Best of Three</option>
-        <option value="3-5">Best of Three | Final: Best of Five</option>
+        <option value="35">Best of Three | Final: Best of Five</option>
       </select>
       <br>
       <span>Введите описание турнира:</span><br>
-      <textarea name="description4" rows="8" cols="80" placeholder="Описание..."></textarea>
+      <textarea name="description" rows="8" cols="80" placeholder="Описание..." maxlength="200"></textarea>
       <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
     </div>
   </div>
   <div class="loading">
     <div>Загрузка<span id="load"></span><br>
       <span>Создание турнирной сетки</span>
+    </div>
+  </div>
+  <div class="grid">
+    <header>
+      <span>Турнирная сетка</span>
+    </header>
+    <div class="final">FINAL</div>
+    <div class="leftSize">
+      <div class="leftOne"></div>
+      <div class="leftTwo"></div>
+      <div class="leftThree"></div>
+      <div class="leftFour"></div>
+      <div class="leftFive"></div>
+    </div>
+    <div class="rightSize">
+      <div class="rightOne"></div>
+      <div class="rightTwo"></div>
+      <div class="rightThree"></div>
+      <div class="rightFour"></div>
+      <div class="rightFive"></div>
     </div>
   </div>
 </body>

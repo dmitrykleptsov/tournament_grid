@@ -96,8 +96,10 @@ html, body {
 }
 
 .loading {
+  display: none;
   width: 400px;
   margin: 380px auto;
+  transition: 1s all;
 }
 
 .loading div {
