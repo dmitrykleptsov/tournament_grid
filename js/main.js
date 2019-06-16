@@ -6,8 +6,8 @@ var Timer, // Переменная для создания таймера
   valueM, // Режим турнира
   countLose = 2, // Переменная для рассчета этапа турнира для сетки лузеров
   count = 1, // Переменная для рассчета этапа турнира
-  divGrid = '<div class="gridSquads" id="grid-$preId$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
-  divBlockTeam = '<div class="block block$blockId blockTeam$side" id="block$block"></div>', // Переменная для создания блоков
+  divGrid = '</div><div class="gridSquads" id="grid-$preId$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
+  divBlockTeam = '<div class="block block$blockId blockTeam$side" id="block$block"><div class="edit edit-$editID"></div>', // Переменная для создания блоков
   divInfo = '<div class="infoStage$lor">$num</div>'; // Этапы турнира
 
 // Получение необходимых значений и запуск загрузочного экрана
@@ -59,6 +59,9 @@ function displayGrid() {
       if (countD == 1) {
         id('grid-1' + j).appendChild(document.createTextNode('Team #' + j));
         id('point-' + j).innerHTML = '0';
+        if (j <= valueT / 2) {
+          $('.edit-1' + j).css('display', 'block');
+        }
       }
     }
     l *= 2;
@@ -119,17 +122,21 @@ function infoList() {
 // Построение блоков
 function createBlocksTeams() {
   var l1 = 2,
-  countL = 0;
+  countL = 0,
+  countE = 0;
 
   for (var i = 4; i <= valueT * 2; i *= 2) {
     countL++;
     for (var j = 1; j <= valueT / l1; j++) {
+      countE++;
       $('.left' + countL).append(divBlockTeam
+        .replace('edit-$editID', 'edit-' + countL + '' + countE)
         .replace('$side', countL)
         .replace('$blockId', j)
         .replace('$block', j)
       );
     }
+    countE = 0;
     l1 *= 2;
   }
 }
@@ -154,7 +161,7 @@ function loader() {
     steps = 0;
   }
   Timer = setTimeout("loader()", 1000);
-  if (stepsTimer == 3) {
+  if (stepsTimer == 1) {
     stopTimer();
     $('.loading').css('display', 'none');
     displayGrid();
