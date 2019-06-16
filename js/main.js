@@ -3,7 +3,9 @@ var steps = 0;
 var stepsTimer = 0;
 var valueT;
 var valueM;
+var count = 1;
 var divGrid = '<div class="gridSquads" id="grid-$id"></div>';
+var divInfo = '<div class="infoStage$lor">1/$num</div>'
 
 function createGrid() {
   var teams = id("teams");
@@ -25,11 +27,6 @@ function createGrid() {
 function displayGrid() {
 
   id('displayMode').innerHTML = valueM;
-
-  //  id('infoFirstStageL').innerHTML = "1/" + valueT;
-  //  id('infoFirstStageR').innerHTML = "1/" + valueT;
-  //  id('infoSecondStageL').innerHTML = "1/" + valueT / 2;
-  //  id('infoSecondStageR').innerHTML = "1/" + valueT / 2;
 
   for (var i = 0; i < valueT; i++) {
     if (i + 1 <= valueT / 2) {
@@ -54,6 +51,8 @@ function displayGrid() {
     }
   }
 
+  infoList();
+
   for (var i = 0; i < valueT / 2; i++) {
     if (i + 1 <= valueT / 4) {
       $('.leftTwo').append(divGrid
@@ -65,7 +64,10 @@ function displayGrid() {
         .replace('gridSquads', 'gridSquads gridRightTwo'));
     }
   }
-  $('.final').css('top', '178px');
+  infoList();
+  $('.final').css('top', '225px');
+  $('.infoStageL:first-child').css('margin-left', '395px');
+  $('.infoStageR:nth-child(2)').css('margin-right', '395px');
   $('.leftSize').css('margin-left', '410px');
   $('.rightSize').css('margin-right', '410px');
 
@@ -81,7 +83,10 @@ function displayGrid() {
           .replace('gridSquads', 'gridSquads gridRightThree'));
       }
     }
-    $('.final').css('top', '238px');
+    infoList();
+    $('.final').css('top', '285px');
+    $('.infoStageL:first-child').css('margin-left', '185px');
+    $('.infoStageR:nth-child(2)').css('margin-right', '185px');
     $('.leftSize').css('margin-left', '200px');
     $('.rightSize').css('margin-right', '200px');
 
@@ -98,10 +103,12 @@ function displayGrid() {
             .replace('gridSquads', 'gridSquads gridRightFour'));
         }
       }
-      $('.final').css('top', '358px');
+      infoList();
+      $('.final').css('top', '405px');
+      $('.infoStageL:first-child').css('margin-left', '5px');
+      $('.infoStageR:nth-child(2)').css('margin-right', '5px');
       $('.leftSize').css('margin-left', '20px');
       $('.rightSize').css('margin-right', '20px');
-
       if (valueT >= 32) {
         for (var i = 0; i < valueT / 16; i++) {
           if (i + 1 <= valueT / 32) {
@@ -114,6 +121,7 @@ function displayGrid() {
               .replace('gridSquads', 'gridSquads gridRightFive'));
           }
         }
+        infoList();
         $('.final').css('top', '598px');
       }
       if (valueT >= 64) {
@@ -131,6 +139,7 @@ function displayGrid() {
               .replace('gridSquads', 'gridSquads gridRightSix'));
           }
         }
+        infoList();
         $('.final').css('top', '1074px');
         $('.final').css('left', '802px');
       }
@@ -138,6 +147,30 @@ function displayGrid() {
   }
 
   $('.grid').css('display', 'block');
+}
+
+function infoList() {
+  if (valueT / count == 2) {
+    $('.infoList').append(divInfo
+      .replace('$lor', 'C')
+      .replace('$num', valueT / count)
+    );
+  } else {
+    $('.infoList').append(divInfo
+      .replace('$lor', 'L')
+      .replace('$num', valueT / count)
+    );
+
+    $('.infoList').append(divInfo
+      .replace('$lor', 'R')
+      .replace('$num', valueT / count)
+    );
+    if (count == 1) {
+      count++;
+    } else {
+      count *= 2;
+    }
+  }
 }
 
 function loading() {
@@ -149,7 +182,6 @@ function loading() {
 function loader() {
   steps++;
   stepsTimer++;
-  console.log(stepsTimer);
   if (steps == 1) {
     id("load").innerHTML = ".";
   } else if (steps == 2) {
@@ -159,7 +191,7 @@ function loader() {
     steps = 0;
   }
   Timer = setTimeout("loader()", 1000);
-  if (stepsTimer == 3) {
+  if (stepsTimer == 4) {
     stopTimer();
     $('.loading').css('display', 'none');
     displayGrid();

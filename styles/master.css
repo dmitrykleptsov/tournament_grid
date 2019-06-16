@@ -154,3 +154,16 @@ html, body {
   top: -34px;
   left: 6px;
 }
+
+.grid footer {
+  border: 1px solid lightgray;
+  border-color: lightgray transparent transparent transparent;
+  width: 100%;
+  height: 200px;
+}
+
+.clearfix {
+  content: " ";
+  display: table;
+  clear: both;
+}
