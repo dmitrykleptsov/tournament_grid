@@ -6,8 +6,8 @@ var Timer, // Переменная для создания таймера
   valueM, // Режим турнира
   countLose = 2, // Переменная для рассчета этапа турнира для сетки лузеров
   count = 1, // Переменная для рассчета этапа турнира
-  divGrid = '</div><div class="gridSquads" id="grid-$preId$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
-  divBlockTeam = '<div class="block block$blockId blockTeam$side" id="block$block"><div class="edit edit-$editID"></div>', // Переменная для создания блоков
+  divGrid = '</div><div class="gridSquads" id="grid-$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
+  divBlockTeam = '<div class="block block$block blockTeam$side" id="block$blockId"><div class="edit" id="edit-$editID" href="#modal" onclick="editMatch(this.id)"></div>', // Переменная для создания блоков
   divInfo = '<div class="infoStage$lor">$num</div>'; // Этапы турнира
 
 // Получение необходимых значений и запуск загрузочного экрана
@@ -35,9 +35,10 @@ function createGrid() {
 function displayGrid() {
   // Переменные для построения сетки
   var countD = 0,
-           k = 1,
-           l = 1,
-        step = 1;
+    k = 1,
+    l = 1,
+    step = 1,
+    countL = -1;
 
   id('displayMode').innerHTML = valueM; // Вывод режима турнира
   createBlocksTeams(); // Создание блоков для каждых 2-х команд
@@ -47,52 +48,54 @@ function displayGrid() {
     k *= 2;
     countD++;
     for (var j = 1; j <= valueT / l; j++) {
-      $('.block' + step).append(divGrid
-        .replace('$preId', countD)
-        .replace('$id', j)
-        .replace('$pointId', j)
+      countL += 2;
+      $('.block' + countD + 'o' + step).append(divGrid
+        .replace('$id', countD + '' + j + '1')
+        .replace('$pointId', countD + 'o' + j)
         .replace('gridSquads', 'gridSquads gridLeft' + countD)
       );
       if (j % 2 == 0) {
         step++;
       }
       if (countD == 1) {
-        id('grid-1' + j).appendChild(document.createTextNode('Team #' + j));
-        id('point-' + j).innerHTML = '0';
+        id('grid-1' + j + '1').appendChild(document.createTextNode('Team #' + j));
+        id('point-1o' + j).innerHTML = '0';
         if (j <= valueT / 2) {
-          $('.edit-1' + j).css('display', 'block');
+          $('#edit-1' + countL + '1').css('display', 'block');
         }
       }
     }
+    countL = -1;
+    step = 1;
     l *= 2;
     infoList();
   }
 
-/*  if (loseGrid) {
-    $('.infoListLose').css('display', 'inline-block');
-    $('.leftSizeLose').css('display', 'block');
-    var k1 = 1,
-        l1 = 2,
-    countL = 0,
-     style = 1;
-    for (var i = 4; i <= valueT * 8; i *= 2) {
-      k1 *= 2;
-      countL++;
-      if (countL % 2 == 1 && countL >= 2) {
-        l1 *= 2;
-        style++;
+  /*  if (loseGrid) {
+      $('.infoListLose').css('display', 'inline-block');
+      $('.leftSizeLose').css('display', 'block');
+      var k1 = 1,
+          l1 = 2,
+      countL = 0,
+       style = 1;
+      for (var i = 4; i <= valueT * 8; i *= 2) {
+        k1 *= 2;
+        countL++;
+        if (countL % 2 == 1 && countL >= 2) {
+          l1 *= 2;
+          style++;
+        }
+        for (var j = 1; j <= valueT / l1; j++) {
+          $('.leftLose' + countL).append(divGrid
+            .replace('$preId', countL)
+            .replace('$id', j)
+            .replace('$pointId', j)
+            .replace('gridSquads', 'gridSquads gridLeft' + style)
+          );
+        }
       }
-      for (var j = 1; j <= valueT / l1; j++) {
-        $('.leftLose' + countL).append(divGrid
-          .replace('$preId', countL)
-          .replace('$id', j)
-          .replace('$pointId', j)
-          .replace('gridSquads', 'gridSquads gridLeft' + style)
-        );
-      }
-    }
-    $('.leftLose1').css('margin-right', '30px');
-  } */
+      $('.leftLose1').css('margin-right', '30px');
+    } */
 
   styleGrids(); // Стилизация сетки в соответствии с выбором кол-ва команд
   $('.grid').css('display', 'block'); // Вывод самой сетки
@@ -122,29 +125,71 @@ function infoList() {
 // Построение блоков
 function createBlocksTeams() {
   var l1 = 2,
-  countL = 0,
-  countE = 0;
+    countL = 0,
+    countE = 0,
+    countK = -1;
 
   for (var i = 4; i <= valueT * 2; i *= 2) {
     countL++;
     for (var j = 1; j <= valueT / l1; j++) {
       countE++;
+      countK += 2;
       $('.left' + countL).append(divBlockTeam
-        .replace('edit-$editID', 'edit-' + countL + '' + countE)
+        .replace('$editID', countL + '' + countK + '1')
         .replace('$side', countL)
-        .replace('$blockId', j)
-        .replace('$block', j)
+        .replace('$blockId', countL + 'o' + countE)
+        .replace('$block', countL + 'o' + countE)
       );
     }
+    countK = -1;
     countE = 0;
     l1 *= 2;
   }
 }
 
+// Редактирование результатов матча
+function editMatch(editId) {
+  modalWindow();
+  var idResult = editId.substring(5, 8); // Кусок идентификатора
+  var teamOne = $('#grid-' + idResult).text().substring(1, 9); // Хранит название первой команды из блока
+  var teamTwo = $('#grid-' + (+idResult + 10)).text().substring(1, 9); // Хранит название второй команды из блока
+  var textResultOne = id('firstResult').childNodes[0]; // Хранят в себе текст, чтобы не задеть дочерние элементы
+  var textResultTwo = id('secondResult').childNodes[0];
+
+  textResultOne.nodeValue = teamOne; // Выводят названия команд в модальном окне
+  textResultTwo.nodeValue = teamTwo;
+
+  id('firstPointResult').innerHTML = 0; // Вывод очков первой команды
+  id('secondPointResult').innerHTML = 0; // Вывод очков второй команды
+
+}
+
+// Вывод модального окна
+function modalWindow() {
+  $('#overlay').fadeIn(400, function() {
+    $('#modal').css('display', 'block').animate({
+      opacity: 1,
+      top: '50%'
+    }, 200);
+  });
+
+  $('.modal_close, #overlay').click(function() {
+    $('.modal_div').animate({
+        opacity: 0,
+        top: '45%'
+      }, 200,
+      function() {
+        $(this).css('display', 'none');
+        $('#overlay').fadeOut(400);
+      }
+    );
+  });
+}
+
 // Показ загрузочного экрана
 function loading() {
-  $('.menu').css('display', 'none');
-  $('.loading').css('display', 'block');
+  $('.menu').fadeOut(600);
+  $('.loading').fadeIn(600);
   loader();
 }
 
@@ -168,44 +213,6 @@ function loader() {
   }
 }
 
-// Отмена отступов каждого последнего элемента всех этапов
-function marginBottom() {
-  $('.blockTeam1:last-child').css({
-    'margin-bottom': '0px'
-  });
-  $('.blockTeam2:last-child').css({
-    'margin-bottom': '0px'
-  });
-  $('.blockTeam3:last-child').css({
-    'margin-bottom': '0px'
-  });
-  $('.blockTeam4:last-child').css({
-    'margin-bottom': '0px'
-  });
-  $('.blockTeam5:last-child').css({
-    'margin-bottom': '0px'
-  });
-  $('.blockTeam6:last-child').css({
-    'margin-bottom': '0px'
-  });
-}
-
-// Получение значения кол-ва команд
-function getTeams(selectObject) {
-  valueT = selectObject.value;
-  $('.errorTeams').css('opacity', '0');
-  if (valueT == 64 || valueT == 32) { // Запрещает выбирать сетку лузеров и выставлять режим турнира Double Elimination
-    $('.selectLoseGrid').css('display', 'none');
-    $('.modeGrid').attr('disabled', 'disabled');
-  } else if (valueT == 4) { // Запрещает выбирать сетку лузеров
-    $('.selectLoseGrid').css('display', 'none');
-    $('.modeGrid').removeAttr('disabled');
-  } else {
-    $('.selectLoseGrid').css('display', 'block');
-    $('.modeGrid').removeAttr('disabled');
-  }
-}
-
 // Стили для каждой из сеток
 function styleGrids() {
   if (valueT == 4) {
@@ -222,6 +229,13 @@ function styleGrids() {
   marginBottom();
 }
 
+// Отмена отступов каждого последнего элемента всех этапов
+function marginBottom() {
+  $('.blockTeam1:last-child, .blockTeam2:last-child, .blockTeam3:last-child, .blockTeam4:last-child, .blockTeam5:last-child, .blockTeam6:last-child').css({
+    'margin-bottom': '0px'
+  });
+}
+
 // Получение значения о создании сетки лузеров
 function getCheckBoxes() {
   var checkboxes = document.getElementsByClassName('loseGrid');
@@ -229,6 +243,28 @@ function getCheckBoxes() {
     if (checkboxes[index].checked) {
       loseGrid = checkboxes[index].value;
     }
+  }
+}
+
+// Получение значения кол-ва команд
+function getTeams(selectObject) {
+  valueT = selectObject.value;
+  $('.errorTeams').css('opacity', '0');
+  nonLoseGrid();
+}
+
+// Накладываются некоторые запреты
+function nonLoseGrid() {
+  // Запрещает выбирать сетку лузеров и выставлять режим турнира Double Elimination
+  if (valueT == 64 || valueT == 32) {
+    $('.selectLoseGrid').fadeOut(600);
+    $('.modeGrid').attr('disabled', 'disabled');
+  } else if (valueT == 4) { // Запрещает выбирать сетку лузеров
+    $('.selectLoseGrid').fadeOut(600);
+    $('.modeGrid').removeAttr('disabled');
+  } else {
+    $('.selectLoseGrid').fadeIn(600);
+    $('.modeGrid').removeAttr('disabled');
   }
 }
 

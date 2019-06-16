@@ -9,14 +9,14 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <script src="js/main.js" charset="utf-8"></script>
-  <script src="js/check.js" charset="utf-8"></script>
   <link rel="stylesheet" href="styles/master.css">
   <link rel="stylesheet" href="styles/grid.css">
   <title>Tournament Grid</title>
 </head>
 
 <body>
-  <div class="menu"> <!--Меню-->
+  <div class="menu">
+    <!--Меню-->
     <div class="header">
       <span>Меню</span>
     </div>
@@ -52,12 +52,14 @@
       <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
     </div>
   </div>
-  <div class="loading"> <!--Загрузочный экран-->
+  <div class="loading">
+    <!--Загрузочный экран-->
     <div>Загрузка<span id="load"></span><br>
       <span>Создание турнирной сетки</span>
     </div>
   </div>
-  <div class="grid"> <!--Турнирная сетка-->
+  <div class="grid">
+    <!--Турнирная сетка-->
     <header>
       <div>Турнирная сетка</div>
       <div><span id="displayMode" style="font-weight: 400;"></span></div>
@@ -81,6 +83,22 @@
       <div class="leftLose5"></div>
       <div class="leftLose6"></div>
     </div> -->
+    <div id="modal" class="modal_div">
+      <span class="modal_close"></span>
+      <div class="headerText">Введите результат матча</div>
+      <div class="content">
+        <div class="block">
+          <div class="gridSquads" id="firstResult">
+            <div class="point" id="firstPointResult"></div>
+          </div>
+          <div class="gridSquads" id="secondResult">
+            <div class="point" id="secondPointResult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
     <footer class="clearfix"></footer> <!-- Прочее-->
   </div>
 </body>
