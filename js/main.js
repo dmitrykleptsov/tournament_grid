@@ -116,6 +116,24 @@ function displayGrid() {
         }
         $('.final').css('top', '598px');
       }
+      if (valueT >= 64) {
+        for (var i = 0; i < valueT / 32; i++) {
+          if (i + 1 <= valueT / 64) {
+            $('.leftSix').append(divGrid
+              .replace('$id', 's' + (i + 1))
+              .replace('gridSquads', 'gridSquads gridLeftSix'));
+            $('#grid-f1').css('top', '540px');
+            $('#grid-f3').css('top', '1500px');
+            $('#grid-f4').css('top', '1620px');
+          } else {
+            $('.rightSix').append(divGrid
+              .replace('$id', 's' + (i + 1))
+              .replace('gridSquads', 'gridSquads gridRightSix'));
+          }
+        }
+        $('.final').css('top', '1074px');
+        $('.final').css('left', '802px');
+      }
     }
   }
 

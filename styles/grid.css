@@ -79,7 +79,6 @@
 
 .grid .rightFour .gridRightFour {
   margin: 210px 30px 440px 0;
-  ;
 }
 
 .grid .leftFour .gridLeftFour {
@@ -95,6 +94,18 @@
 .grid .leftFive .gridLeftFive {
   position: absolute;
   top: 660px;
+  left: 760px;
+}
+
+.grid .leftSix .gridLeftSix {
+  position: absolute;
+  top: 1010px;
+  left: 760px;
+}
+
+.grid .rightSix .gridRightSix {
+  position: absolute;
+  top: 1140px;
   left: 760px;
 }
 
