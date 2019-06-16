@@ -29,7 +29,13 @@
         <option value="16">16</option>
         <option value="32">32</option>
         <option value="64">64</option>
-      </select><br>
+      </select>
+      <div class="errorTeams" style="opacity: 0;">
+        <span id="errorT"></span>
+      </div>
+      <div class="errorMode" style="opacity: 0;">
+        <span id="errorM"></span>
+      </div><br>
       <span>Выберите режим турнира:</span><br>
       <select name="mode" id="mode" onchange="getMode(this)">
         <option value="0" selected disabled>Не выбрано</option>
@@ -43,7 +49,7 @@
       <br>
       <span>Введите описание турнира:</span><br>
       <textarea name="description4" rows="8" cols="80" placeholder="Описание..."></textarea>
-      <button type="button" name="button" onclick="createGrid(); check()">Создать сетку</button>
+      <button type="button" name="button" onclick="createGrid()">Создать сетку</button>
     </div>
   </div>
   <div class="loading">

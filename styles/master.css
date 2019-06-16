@@ -8,6 +8,7 @@ html, body {
 }
 
 .menu {
+  position: relative;
   width: 500px;
   height: 550px;
   border-radius: 15px;
@@ -108,4 +109,46 @@ html, body {
 
 .loading span:last-child {
   font-size: 20px;
+}
+
+.menu .errorTeams, .menu .errorMode {
+  position: absolute;
+  top: 120px;
+  left: 190px;
+  width: auto;
+  padding-right: 15px;
+  height: 27.5px;
+  border: 1px solid transparent;
+  border-radius: .4rem;
+  background-color: #f8d7da;
+  font-weight: lighter;
+  display: block;
+  transition: 0.3s all;
+}
+
+.menu .errorMode {
+  top: 215px;
+  left: 320px;
+}
+
+.menu .errorTeams::before, .menu .errorMode::before {
+  display: block;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top: 10px solid #f8d7da;
+  content: " ";
+  transform: rotate(90deg);
+  position: relative;
+  top: 4px;
+  left: -20px;
+}
+
+.menu .errorTeams span, .menu .errorMode span {
+  user-select: none;
+  position: relative;
+  color: #721c24;
+  font-size: 12px;
+  top: -34px;
+  left: 6px;
 }
