@@ -12,8 +12,11 @@ var Timer, // Переменная для создания таймера
   divResultPoints = '<button class="resultPoint" value="$valuePoints" onclick="styleResultPoints(this.value)">$pointsResult</button>', // Вывод выбора счета матча
   selectResultPoints = 0, // Вспомогательная глобальная переменная, хранящая значение выбранного результирующего счета матча
   idResultPoints = 0, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
+  idResultPointsP, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
   teamOne = '',
-  teamTwo = '';
+  teamTwo = '',
+  varIntPoints = 96,
+  varCharPoints = '';
 
 // Получение необходимых значений и запуск загрузочного экрана
 function createGrid() {
@@ -57,45 +60,49 @@ function displayGrid() {
     k *= 2;
     countD++;
     varChar = String.fromCharCode(+(varInt) + 1);
-    for (var j = 1; j <= valueT / l; j++) {
+    for (var j = 1; j <= (valueT / l); j++) {
       countL += 2;
       if (countD == 1) {
         $('.block' + countD + 'o' + step).append(divGrid
           .replace('$id', step + '' + h)
-          .replace('$pointId', step + '' + h + 'p')
+          .replace('$pointId', step + '' + h)
           .replace('gridSquads', 'gridSquads gridLeft' + countD)
         );
         id('grid-' + step + '' + h).appendChild(document.createTextNode('Team #' + j));
-        id('point-' + step + '' + h + 'p').innerHTML = '0';
+        id('point-' + step + '' + h).innerHTML = '0';
         if (j <= valueT / 2) {
           $('#edit-' + j + '1').css('display', 'block');
         }
       } else if (countD == 2) {
         $('.block' + countD + 'o' + step).append(divGrid
           .replace('$id', j + '1' + 'a')
-          .replace('$pointId', step + '' + h + 'pa')
+          .replace('$pointId', j + '1' + 'a')
           .replace('gridSquads', 'gridSquads gridLeft' + countD)
         );
+        id('point-' + j + '1' + 'a').innerHTML = '0';
       } else if (countD == 3) {
         $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'b')
-          .replace('$pointId', lo + '' + h + 'p')
+          .replace('$id', lo + '1' + 'aa')
+          .replace('$pointId', lo + '1' + 'aa')
           .replace('gridSquads', 'gridSquads gridLeft' + countD)
         );
+        id('point-' + lo + '1' + 'aa').innerHTML = '0';
         lo += 2;
       } else if (countD == 4) {
         $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'c')
-          .replace('$pointId', lo + '' + h + 'p')
+          .replace('$id', lo + '1' + 'aaa')
+          .replace('$pointId', lo + '1' + 'aaa')
           .replace('gridSquads', 'gridSquads gridLeft' + countD)
         );
+        id('point-' + lo + '1' + 'aaa').innerHTML = '0';
         lo += 4;
       } else if (countD == 5) {
         $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'd')
-          .replace('$pointId', lo + '' + h + 'p')
+          .replace('$id', lo + '1' + 'aaaa')
+          .replace('$pointId', lo + '1' + 'aaaa')
           .replace('gridSquads', 'gridSquads gridLeft' + countD)
         );
+        id('point-' + lo + '1' + 'aaaa').innerHTML = '0';
         lo += 6;
       }
       if (j % 2 == 0) {
@@ -140,6 +147,7 @@ function displayGrid() {
 
   styleGrids(); // Стилизация сетки в соответствии с выбором кол-ва команд
   displaySelectPoints();
+  teamWinnerID(countD);
   $('.grid').css('display', 'block'); // Вывод самой сетки
 }
 
@@ -166,7 +174,7 @@ function createBlocksTeams() {
         step++;
       } else if (countL == 2) {
         $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'aa')
+          .replace('$editID', step + '1' + 'a')
           .replace('$side', countL)
           .replace('$blockId', countL + 'o' + countE)
           .replace('$block', countL + 'o' + countE)
@@ -174,7 +182,7 @@ function createBlocksTeams() {
         step += 2;
       } else if (countL == 3) {
         $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'bb')
+          .replace('$editID', step + '1' + 'aa')
           .replace('$side', countL)
           .replace('$blockId', countL + 'o' + countE)
           .replace('$block', countL + 'o' + countE)
@@ -182,7 +190,7 @@ function createBlocksTeams() {
         step += 4;
       } else if (countL == 4) {
         $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'cc')
+          .replace('$editID', step + '1' + 'aaa')
           .replace('$side', countL)
           .replace('$blockId', countL + 'o' + countE)
           .replace('$block', countL + 'o' + countE)
@@ -190,7 +198,7 @@ function createBlocksTeams() {
         step += 6;
       } else if (countL == 5) {
         $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'dd')
+          .replace('$editID', step + '1' + 'aaaa')
           .replace('$side', countL)
           .replace('$blockId', countL + 'o' + countE)
           .replace('$block', countL + 'o' + countE)
@@ -223,6 +231,21 @@ function infoList() {
     } else {
       count *= 2;
     }
+  }
+}
+
+// Задаем идентификатор блоку с победителем
+function teamWinnerID(countD) {
+  if (countD == 2) {
+    $('#winner').attr('id', 'grid-11aa');
+  } else if (countD == 3) {
+    $('#winner').attr('id', 'grid-11aaa');
+  } else if (countD == 4) {
+    $('#winner').attr('id', 'grid-11aaaa');
+  } else if (countD == 5) {
+    $('#winner').attr('id', 'grid-11aaaaa');
+  } else if (countD == 6) {
+    $('#winner').attr('id', 'grid-11aaaaaa');
   }
 }
 
@@ -287,18 +310,28 @@ function styleResultPoints(value) {
 function saveResult() {
   var truePoints = Math.floor(selectResultPoints / 10);
   if (truePoints) {
-    id('grid-' + idResultPoints + 'a').appendChild(document.createTextNode(teamOne));
-    id('point-' + idResultPoints + 'p').innerHTML = '1';
-    $('#edit-' + idResultPoints).css('display', 'none');
+    id('grid-' + idResultPoints + 'a' + '' + idResultPointsP).appendChild(document.createTextNode(teamOne));
+    id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '1';
+    $('#edit-' + idResultPoints  + '' + idResultPointsP).css('display', 'none');
+    $('#edit-' + idResultPoints + 'a'  + '' + idResultPointsP).css('display', 'block');
+
     $('.resultPoint').css({
       'background-color': 'white',
       'color': '#595959',
       'border': '1px solid lightgray'
     });
   } else {
-    id('grid-' + idResultPoints + 'a').appendChild(document.createTextNode(teamTwo));
-    id('point-' + (+idResultPoints + 1) + 'p').innerHTML = '1';
-    $('#edit-' + idResultPoints).css('display', 'none');
+    id('grid-' + idResultPoints + '' + idResultPointsP + 'a').appendChild(document.createTextNode(teamTwo));
+    if (idResultPointsP == '') {
+      id('point-' + (+idResultPoints + 1)).innerHTML = '1';
+    } else if (idResultPointsP == 'a') {
+      id('point-' + (+idResultPoints + 10) + '' + idResultPointsP).innerHTML = '1';
+    } else if (idResultPointsP == 'aa') {
+      id('point-' + (+idResultPoints + 20) + '' + idResultPointsP).innerHTML = '1';
+    } else if (idResultPointsP == 'aaa') {
+      id('point-' + (+idResultPoints + 40) + '' + idResultPointsP).innerHTML = '1';
+    }
+    $('#edit-' + idResultPoints + '' + idResultPointsP).css('display', 'none');
     $('.resultPoint').css({
       'background-color': 'white',
       'color': '#595959',
@@ -307,12 +340,25 @@ function saveResult() {
   }
 }
 
+// Реализация через две переменные, походу, придется добавлять во второй этап АА, а потом уже менять на АБ и т.д.
+
 // Редактирование результатов матча
 function editMatch(editId) {
   modalWindow();
-  idResultPoints = editId.substring(5, 8); // Кусок идентификатора
-  teamOne = $('#grid-' + idResultPoints).text().substring(1, 9); // Хранит название первой команды из блока
-  teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из блока
+  idResultPoints = editId.substring(5, 7); // Кусок идентификатора с цифрами
+  idResultPointsP = editId.substring(7, 10); // Кусок идентификатора с цифрами
+  console.log(idResultPoints);
+  console.log(idResultPointsP);
+  teamOne = $('#grid-' + idResultPoints + '' + idResultPointsP).text().substring(1, 9); // Хранит название первой команды из блока
+  if (idResultPointsP == '') {
+    teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из блока
+  } else if (idResultPointsP == 'a') {
+    teamTwo = $('#grid-' + (+idResultPoints + 10) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+  } else if (idResultPointsP == 'aa') {
+    teamTwo = $('#grid-' + (+idResultPoints + 20) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+  } else if (idResultPointsP == 'aaa') {
+    teamTwo = $('#grid-' + (+idResultPoints + 40) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+  }
   var textResultOne = id('firstResult').childNodes[0]; // Хранят в себе текст, чтобы не задеть дочерние элементы
   var textResultTwo = id('secondResult').childNodes[0];
 

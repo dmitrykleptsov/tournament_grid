@@ -123,15 +123,36 @@
   margin-top: -1px;
 }
 
+
+.grid .teamWinner {
+  border: 1px solid #C2C6CE;
+  color: #595959;
+  vertical-align: middle;
+  padding-left: 35px;
+  width: 200px;
+  height: 50px;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 400;
+  float: right;
+  border-radius: 15px;
+  margin-left: 20px;
+  background-image: url('../img/winner.svg');
+  background-size: 39%;
+  background-position-x: 122px;
+  background-position-y: -2px;
+  background-repeat: no-repeat;
+}
+
 .grid .block .edit {
-  display: none;
+  display: block;
   width: 23px;
   height: 23px;
   border-radius: 10px;
   background-image: url("../img/success.svg");
   position: absolute;
-  top: 28px;
-  right: 18px;
+  top: 30px;
+  right: 20px;
 }
 
 .grid .block .edit:hover {
