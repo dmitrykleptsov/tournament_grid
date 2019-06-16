@@ -4,19 +4,16 @@ var Timer, // Переменная для создания таймера
   stepsTimer = 0, // Переменная для загрузочного экрана
   valueT, // Кол-во команд
   valueM, // Режим турнира
-  countLose = 2, // Переменная для рассчета этапа турнира для сетки лузеров
-  count = 1, // Переменная для рассчета этапа турнира
+  count = 1, // Переменная для рассчета этапа турнира в infoList();
   divGrid = '</div><div class="gridSquads" id="grid-$id"><div id="point-$pointId" class="point"></div></div>', // Переменная для хранения информации о команде
-  divBlockTeam = '<div class="block block$block blockTeam$side" id="block$blockId"><div class="edit" id="edit-$editID" href="#modal" onclick="editMatch(this.id)"></div>', // Переменная для создания блоков
+  divBlockTeam = '<div class="block block$block blockTeam$side"><div class="edit" id="edit-$editID" href="#modal" onclick="editMatch(this.id)"></div>', // Переменная для создания блоков
   divInfo = '<div class="infoStage$lor">$num</div>', // Этапы турнира
   divResultPoints = '<button class="resultPoint" value="$valuePoints" onclick="styleResultPoints(this.value)">$pointsResult</button>', // Вывод выбора счета матча
   selectResultPoints = 0, // Вспомогательная глобальная переменная, хранящая значение выбранного результирующего счета матча
   idResultPoints = 0, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
   idResultPointsP, // Вспомогательная глобальная переменная, хранящая идентификатор кнопки редактирования счета матча
-  teamOne = '',
-  teamTwo = '',
-  varIntPoints = 96,
-  varCharPoints = '';
+  teamOne = '', // Хранит информацию о первой команде, выбранного матча
+  teamTwo = ''; // Хранит информацию о второй команде, выбранного матча
 
 // Получение необходимых значений и запуск загрузочного экрана
 function createGrid() {
@@ -42,174 +39,99 @@ function createGrid() {
 // Построение сетки
 function displayGrid() {
   // Переменные для построения сетки
-  var countD = 0,
-    k = 1,
-    l = 1,
+  var stageBlock = 0,
+    identificator = 'aa',
+    positionDifference = 2;
+  stageDivider = 1,
     step = 1,
-    countL = -1,
-    varInt = 96,
-    varChar,
-    h = 1,
-    lo = 1;
+    firstStage = 1,
+    stepStage = 1;
 
   id('displayMode').innerHTML = valueM; // Вывод режима турнира
   createBlocksTeams(); // Создание блоков для каждых 2-х команд
 
   // Построение сетки через блоки
   for (var i = 4; i <= valueT * 2; i *= 2) {
-    k *= 2;
-    countD++;
-    varChar = String.fromCharCode(+(varInt) + 1);
-    for (var j = 1; j <= (valueT / l); j++) {
-      countL += 2;
-      if (countD == 1) {
-        $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', step + '' + h)
-          .replace('$pointId', step + '' + h)
-          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+    stageBlock++;
+    for (var j = 1; j <= valueT / stageDivider; j++) {
+      if (stageBlock == 1) {
+        $('.block' + stageBlock + '' + step).append(divGrid
+          .replace('$id', step + '' + firstStage)
+          .replace('$pointId', step + '' + firstStage)
+          .replace('gridSquads', 'gridSquads gridLeft' + stageBlock)
         );
-        id('grid-' + step + '' + h).appendChild(document.createTextNode('Team #' + j));
-        id('point-' + step + '' + h).innerHTML = '0';
+        id('grid-' + step + '' + firstStage).appendChild(document.createTextNode('Team #' + j));
+        id('point-' + step + '' + firstStage).innerHTML = '0';
         if (j <= valueT / 2) {
           $('#edit-' + j + '1').css('display', 'block');
         }
-      } else if (countD == 2) {
-        $('.block' + countD + 'o' + step).append(divGrid
+      } else if (stageBlock == 2) {
+        $('.block' + stageBlock + '' + step).append(divGrid
           .replace('$id', j + '1' + 'a')
           .replace('$pointId', j + '1' + 'a')
-          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+          .replace('gridSquads', 'gridSquads gridLeft' + stageBlock)
         );
         id('point-' + j + '1' + 'a').innerHTML = '0';
-      } else if (countD == 3) {
-        $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'aa')
-          .replace('$pointId', lo + '1' + 'aa')
-          .replace('gridSquads', 'gridSquads gridLeft' + countD)
+      } else if (stageBlock > 2) {
+        $('.block' + stageBlock + '' + step).append(divGrid
+          .replace('$id', stepStage + '1' + identificator)
+          .replace('$pointId', stepStage + '1' + identificator)
+          .replace('gridSquads', 'gridSquads gridLeft' + stageBlock)
         );
-        id('point-' + lo + '1' + 'aa').innerHTML = '0';
-        lo += 2;
-      } else if (countD == 4) {
-        $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'aaa')
-          .replace('$pointId', lo + '1' + 'aaa')
-          .replace('gridSquads', 'gridSquads gridLeft' + countD)
-        );
-        id('point-' + lo + '1' + 'aaa').innerHTML = '0';
-        lo += 4;
-      } else if (countD == 5) {
-        $('.block' + countD + 'o' + step).append(divGrid
-          .replace('$id', lo + '1' + 'aaaa')
-          .replace('$pointId', lo + '1' + 'aaaa')
-          .replace('gridSquads', 'gridSquads gridLeft' + countD)
-        );
-        id('point-' + lo + '1' + 'aaaa').innerHTML = '0';
-        lo += 6;
+        id('point-' + stepStage + '1' + identificator).innerHTML = '0';
+        stepStage += positionDifference;
       }
       if (j % 2 == 0) {
         step++;
-        h = 0;
+        firstStage = 0;
       }
-      h++;
+      firstStage++;
     }
-    lo = 1;
-    varInt++;
-    countL = -1;
+    if (stageBlock == 3) {
+      positionDifference *= 2;
+      identificator += 'a';
+    }
+    stepStage = 1;
     step = 1;
-    l *= 2;
+    stageDivider *= 2;
     infoList();
   }
 
-  /*  if (loseGrid) {
-      $('.infoListLose').css('display', 'inline-block');
-      $('.leftSizeLose').css('display', 'block');
-      var k1 = 1,
-          l1 = 2,
-      countL = 0,
-       style = 1;
-      for (var i = 4; i <= valueT * 8; i *= 2) {
-        k1 *= 2;
-        countL++;
-        if (countL % 2 == 1 && countL >= 2) {
-          l1 *= 2;
-          style++;
-        }
-        for (var j = 1; j <= valueT / l1; j++) {
-          $('.leftLose' + countL).append(divGrid
-            .replace('$preId', countL)
-            .replace('$id', j)
-            .replace('$pointId', j)
-            .replace('gridSquads', 'gridSquads gridLeft' + style)
-          );
-        }
-      }
-      $('.leftLose1').css('margin-right', '30px');
-    } */
-
-  styleGrids(); // Стилизация сетки в соответствии с выбором кол-ва команд
+  marginBottom();
   displaySelectPoints();
-  teamWinnerID(countD);
+  teamWinnerID(stageBlock);
   $('.grid').css('display', 'block'); // Вывод самой сетки
 }
 
 // Построение блоков
 function createBlocksTeams() {
-  var l1 = 2,
-    countL = 0,
-    countE = 0,
-    countK = -1,
+  var stageDivider = 2,
+    identificator = '';
+  stageBlock = 0,
+    positionDifference = 1,
+    positionInStage = 0,
     step = 1;
 
   for (var i = 4; i <= valueT * 2; i *= 2) {
-    countL++;
-    for (var j = 1; j <= valueT / l1; j++) {
-      countE++;
-      countK += 2;
-      if (countL == 1) {
-        $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1')
-          .replace('$side', countL)
-          .replace('$blockId', countL + 'o' + countE)
-          .replace('$block', countL + 'o' + countE)
-        );
-        step++;
-      } else if (countL == 2) {
-        $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'a')
-          .replace('$side', countL)
-          .replace('$blockId', countL + 'o' + countE)
-          .replace('$block', countL + 'o' + countE)
-        );
-        step += 2;
-      } else if (countL == 3) {
-        $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'aa')
-          .replace('$side', countL)
-          .replace('$blockId', countL + 'o' + countE)
-          .replace('$block', countL + 'o' + countE)
-        );
-        step += 4;
-      } else if (countL == 4) {
-        $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'aaa')
-          .replace('$side', countL)
-          .replace('$blockId', countL + 'o' + countE)
-          .replace('$block', countL + 'o' + countE)
-        );
-        step += 6;
-      } else if (countL == 5) {
-        $('.left' + countL).append(divBlockTeam
-          .replace('$editID', step + '1' + 'aaaa')
-          .replace('$side', countL)
-          .replace('$blockId', countL + 'o' + countE)
-          .replace('$block', countL + 'o' + countE)
-        );
-        step += 8;
-      }
+    stageBlock++;
+    for (var j = 1; j <= valueT / stageDivider; j++) {
+      positionInStage++;
+      $('.left' + stageBlock).append(divBlockTeam
+        .replace('$editID', step + '1' + identificator)
+        .replace('$side', stageBlock)
+        .replace('$block', stageBlock + '' + positionInStage)
+      );
+      step += positionDifference;
     }
     step = 1;
-    countK = -1;
-    countE = 0;
-    l1 *= 2;
+    positionInStage = 0;
+    stageDivider *= 2;
+    identificator += 'a';
+    if (positionDifference == 1) {
+      positionDifference = 2;
+    } else {
+      positionDifference *= 2;
+    }
   }
 }
 
@@ -235,16 +157,16 @@ function infoList() {
 }
 
 // Задаем идентификатор блоку с победителем
-function teamWinnerID(countD) {
-  if (countD == 2) {
+function teamWinnerID(stageBlock) {
+  if (stageBlock == 2) {
     $('#winner').attr('id', 'grid-11aa');
-  } else if (countD == 3) {
+  } else if (stageBlock == 3) {
     $('#winner').attr('id', 'grid-11aaa');
-  } else if (countD == 4) {
+  } else if (stageBlock == 4) {
     $('#winner').attr('id', 'grid-11aaaa');
-  } else if (countD == 5) {
+  } else if (stageBlock == 5) {
     $('#winner').attr('id', 'grid-11aaaaa');
-  } else if (countD == 6) {
+  } else if (stageBlock == 6) {
     $('#winner').attr('id', 'grid-11aaaaaa');
   }
 }
@@ -264,22 +186,43 @@ function displaySelectPoints() {
 
   for (var i = 0; i < iterr; i++) {
     if (iterr == 4) {
-      resultO = 2;
+      if (i == 0) {
+        resultZ = 0;
+        resultO = 2;
+      } else if (i == 1) {
+        resultZ = 1;
+        resultO = 2;
+      } else if (i == 2) {
+        resultZ = 2;
+        resultO = 0;
+      } else {
+        resultZ = 2;
+        resultO = 1;
+      }
+    }
+    if (iterr == 2) {
+      if (i == 0) {
+        resultZ = 0;
+        resultO = 1;
+      } else {
+        resultZ = 1;
+        resultO = 0;
+      }
     }
     $('.blockPoints').append(divResultPoints
       .replace('$pointsResult', resultZ + ':' + resultO)
       .replace('$valuePoints', resultZ + '' + resultO)
     );
-    if (iterr == 2) {
-      resultZ++;
-      resultO--;
-    }
   }
-}
+  if (iterr == 4) {
+    $('.blockPoints').css('margin-top', '25px');
+    $('.resultPoint:nth-child(3), .resultPoint:nth-child(4)').css('margin-top', '5px');
+  }
+} // to Finish
 
 // Стилизация выбора счета
 function styleResultPoints(value) {
-  if (value.substring(1) == 0) {
+  if (value == 10) {
     $('.resultPoint').css({
       'background-color': 'white',
       'color': '#595959',
@@ -290,7 +233,7 @@ function styleResultPoints(value) {
       'color': 'white',
       'border': 'none'
     });
-  } else {
+  } else if (value == 01) {
     $('.resultPoint').css({
       'background-color': 'white',
       'color': '#595959',
@@ -301,63 +244,71 @@ function styleResultPoints(value) {
       'color': 'white',
       'border': 'none'
     });
+  } else if (value == 02) {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:first-child').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
+  } else if (value == 12) {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:nth-child(2)').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
+  } else if (value == 20) {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:nth-child(3)').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
+  } else if (value == 21) {
+    $('.resultPoint').css({
+      'background-color': 'white',
+      'color': '#595959',
+      'border': '1px solid lightgray'
+    });
+    $('.resultPoint:last-child').css({
+      'background-color': '#5995ED',
+      'color': 'white',
+      'border': 'none'
+    });
   }
 
   selectResultPoints = value;
 }
 
-// Продвижение сетки
-function saveResult() {
-  var truePoints = Math.floor(selectResultPoints / 10);
-  if (truePoints) {
-    id('grid-' + idResultPoints + 'a' + '' + idResultPointsP).appendChild(document.createTextNode(teamOne));
-    id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '1';
-    $('#edit-' + idResultPoints  + '' + idResultPointsP).css('display', 'none');
-    $('#edit-' + idResultPoints + 'a'  + '' + idResultPointsP).css('display', 'block');
-
-    $('.resultPoint').css({
-      'background-color': 'white',
-      'color': '#595959',
-      'border': '1px solid lightgray'
-    });
-  } else {
-    id('grid-' + idResultPoints + '' + idResultPointsP + 'a').appendChild(document.createTextNode(teamTwo));
-    if (idResultPointsP == '') {
-      id('point-' + (+idResultPoints + 1)).innerHTML = '1';
-    } else if (idResultPointsP == 'a') {
-      id('point-' + (+idResultPoints + 10) + '' + idResultPointsP).innerHTML = '1';
-    } else if (idResultPointsP == 'aa') {
-      id('point-' + (+idResultPoints + 20) + '' + idResultPointsP).innerHTML = '1';
-    } else if (idResultPointsP == 'aaa') {
-      id('point-' + (+idResultPoints + 40) + '' + idResultPointsP).innerHTML = '1';
-    }
-    $('#edit-' + idResultPoints + '' + idResultPointsP).css('display', 'none');
-    $('.resultPoint').css({
-      'background-color': 'white',
-      'color': '#595959',
-      'border': '1px solid lightgray'
-    });
-  }
-}
-
-// Реализация через две переменные, походу, придется добавлять во второй этап АА, а потом уже менять на АБ и т.д.
-
 // Редактирование результатов матча
 function editMatch(editId) {
   modalWindow();
   idResultPoints = editId.substring(5, 7); // Кусок идентификатора с цифрами
-  idResultPointsP = editId.substring(7, 10); // Кусок идентификатора с цифрами
-  console.log(idResultPoints);
-  console.log(idResultPointsP);
-  teamOne = $('#grid-' + idResultPoints + '' + idResultPointsP).text().substring(1, 9); // Хранит название первой команды из блока
+  idResultPointsP = editId.substring(7, 12); // Кусок идентификатора с буквами
+  teamOne = $('#grid-' + idResultPoints + '' + idResultPointsP).text().substring(1, 9); // Хранит название первой команды из выбранного блока
   if (idResultPointsP == '') {
-    teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из блока
+    teamTwo = $('#grid-' + (+idResultPoints + 1)).text().substring(1, 9); // Хранит название второй команды из выбранного блока первого этапа
   } else if (idResultPointsP == 'a') {
-    teamTwo = $('#grid-' + (+idResultPoints + 10) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+    teamTwo = $('#grid-' + (+idResultPoints + 10) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из выбранного блока второго этапа
   } else if (idResultPointsP == 'aa') {
-    teamTwo = $('#grid-' + (+idResultPoints + 20) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+    teamTwo = $('#grid-' + (+idResultPoints + 20) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из выбранного блока третьего этапа
   } else if (idResultPointsP == 'aaa') {
-    teamTwo = $('#grid-' + (+idResultPoints + 40) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из блока
+    teamTwo = $('#grid-' + (+idResultPoints + 40) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из выбранного блока четвертого этапа
+  } else if (idResultPointsP == 'aaaa') {
+    teamTwo = $('#grid-' + (+idResultPoints + 80) + '' + idResultPointsP).text().substring(1, 9); // Хранит название второй команды из выбранного блока пятого этапа
   }
   var textResultOne = id('firstResult').childNodes[0]; // Хранят в себе текст, чтобы не задеть дочерние элементы
   var textResultTwo = id('secondResult').childNodes[0];
@@ -374,6 +325,54 @@ function editMatch(editId) {
   } else {
     id('textModeModal').innerHTML = 'двух';
   }
+}
+
+// Сложно описать, что делает эта функция... Если на пальцах, то она заполняет счет второй команды выбранного блока
+function hardDescription(num) {
+  if (idResultPointsP == '') {
+    id('point-' + (+idResultPoints + 1)).innerHTML = num;
+  } else if (idResultPointsP == 'a') {
+    id('point-' + (+idResultPoints + 10) + '' + idResultPointsP).innerHTML = num;
+  } else if (idResultPointsP == 'aa') {
+    id('point-' + (+idResultPoints + 20) + '' + idResultPointsP).innerHTML = num;
+  } else if (idResultPointsP == 'aaa') {
+    id('point-' + (+idResultPoints + 40) + '' + idResultPointsP).innerHTML = num;
+  } else if (idResultPointsP == 'aaaa') {
+    id('point-' + (+idResultPoints + 80) + '' + idResultPointsP).innerHTML = num;
+  }
+}
+
+// Продвижение сетки
+function saveResult() {
+  var truePoints = Math.floor(selectResultPoints / 10);
+  if (selectResultPoints == 10 || truePoints == 2) {
+    id('grid-' + idResultPoints + 'a' + idResultPointsP).appendChild(document.createTextNode(teamOne));
+    id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '1';
+    hardDescription(0);
+    if (selectResultPoints == 21) {
+      id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '2';
+      hardDescription(1);
+    } else if (selectResultPoints == 20) {
+      id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '2';
+      hardDescription(0);
+    }
+  } else {
+    id('grid-' + idResultPoints + 'a' + idResultPointsP).appendChild(document.createTextNode(teamTwo));
+    hardDescription(1);
+    if (selectResultPoints == 12) {
+      id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '1';
+      hardDescription(2);
+    } else if (selectResultPoints == '02') {
+      id('point-' + idResultPoints + '' + idResultPointsP).innerHTML = '0';
+      hardDescription(2);
+    }
+  }
+  $('#edit-' + idResultPoints + '' + idResultPointsP).css('display', 'none');
+  $('.resultPoint').css({
+    'background-color': 'white',
+    'color': '#595959',
+    'border': '1px solid lightgray'
+  });
 }
 
 // Вывод модального окна
@@ -425,22 +424,6 @@ function loader() {
   }
 }
 
-// Стили для каждой из сеток
-function styleGrids() {
-  if (valueT == 4) {
-    $('body').css('background-image', 'url("img/bg-4.png")');
-  } else if (valueT == 8) {
-    $('body').css('background-image', 'url("img/bg-8.png")');
-  } else if (valueT == 16) {
-    $('body').css('background-image', 'url("img/bg-16.png")');
-  } else if (valueT == 32) {
-    $('body').css('background-image', 'url("img/bg-32.png")');
-  } else {
-    $('body').css('background-image', 'url("img/bg-64.png")');
-  }
-  marginBottom();
-}
-
 // Отмена отступов каждого последнего элемента всех этапов
 function marginBottom() {
   $('.blockTeam1:last-child, .blockTeam2:last-child, .blockTeam3:last-child, .blockTeam4:last-child, .blockTeam5:last-child, .blockTeam6:last-child').css({
@@ -462,20 +445,15 @@ function getCheckBoxes() {
 function getTeams(selectObject) {
   valueT = selectObject.value;
   $('.errorTeams').css('opacity', '0');
-  nonLoseGrid();
+  nonMode();
 }
 
 // Накладываются некоторые запреты
-function nonLoseGrid() {
-  // Запрещает выбирать сетку лузеров и выставлять режим турнира Double Elimination
+function nonMode() {
+  // Запрещает выставлять режим турнира Double Elimination
   if (valueT == 64 || valueT == 32) {
-    $('.selectLoseGrid').fadeOut(600);
     $('.modeGrid').attr('disabled', 'disabled');
-  } else if (valueT == 4) { // Запрещает выбирать сетку лузеров
-    $('.selectLoseGrid').fadeOut(600);
-    $('.modeGrid').removeAttr('disabled');
   } else {
-    $('.selectLoseGrid').fadeIn(600);
     $('.modeGrid').removeAttr('disabled');
   }
 }
