@@ -425,7 +425,7 @@ function loader() {
     steps = 0;
   }
   Timer = setTimeout("loader()", 1000);
-  if (stepsTimer == 1) {
+  if (stepsTimer == 4) {
     stopTimer();
     $('.loading').css('display', 'none');
     displayGrid();
